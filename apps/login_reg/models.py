@@ -26,13 +26,13 @@ class UserManager(models.Manager):
 	def validate_registration(self, post_data):
 		errors = []
 		# check length of name fields
-		if len(post_data['first_name']) < 2 or len(post_data['last_name']) < 2:
+		if len(post_data['first_name']) < 2 or len(post_data['alias']) < 2:
 			errors.append("name fields must be at least 3 characters")
 		# check length of name password
 		if len(post_data['password']) <8:
 			errors.append("password must be at least 8 characters")
 		# check name fields for letter characters
-		if not re.match(NAME_REGEX, post_data['first_name']) or not re.match(NAME_REGEX, post_data['last_name']):
+		if not re.match(NAME_REGEX, post_data['first_name']) or not re.match(NAME_REGEX, post_data['alias']):
 			errors.append("name fields must be letter characters only")
 		# check emailness of email
 		if not re.match(EMAIL_REGEX, post_data['email']):
@@ -54,66 +54,54 @@ class UserManager(models.Manager):
 
 			new_user = self.create(
 				first_name=post_data['first_name'],
-				last_name=post_data['last_name'],
+				alias=post_data['alias'],
 				email=post_data['email'],
-				password = hashed
+				password = hashed,
+				dob=post_data['dob']
 			)
 			return new_user
 		return errors
 
-class ComplimentManager(models.Manager):
-	def validate(self, data):
-		pass
-		# errors = []
-		# # check length of name comment field
-		# if len(post_data['content']) < 2:
-		# 	errors.append("Come on bruh, put some effort into it!")
-		# if not errors:
-	def create_compliment(self, post_data, user):
-			return self.create(
-					content=post_data['content'],
-					author = user,
-					faved_by = ""
-				)
 
 class User(models.Model):
 	first_name = models.CharField(max_length=255)
-	last_name = models.CharField(max_length=255)
+	alias = models.CharField(max_length=255)
 	email = models.CharField(max_length=255)
 	password = models.CharField(max_length=255)
-	robot = models.BooleanField(default=False)
-	# address = models.CharField(max_length=255)
-	# credit_card = models.CharField(max_length=30)
-	# trader = models.ManyToManyField("User", through = "Gallon")
+	dob = models.DateField(blank=True, null=True)
+	friended_by = models.ManyToManyField('User', related_name='friends')
 	created_at = models.DateTimeField(auto_now_add = True)
 	updated_at = models.DateTimeField(auto_now = True)
 
 	objects = UserManager()
 
 	def __repr__(self):
-		return "<User: {} {} {} {} {}>".format(self.id, self.first_name, self.last_name, self.email, self.password)
+		return "<User: {} {} {} {} {}>".format(self.id, self.first_name, self.alias, self.email, self.password)
 
 
-class Compliment(models.Model):
-	content = models.CharField(max_length=255)
-	author = models.ForeignKey(User, related_name = 'compliments')
-	faved_by = models.ManyToManyField(User, related_name= 'favorited')
-	created_at = models.DateTimeField(auto_now_add = True)
-	updated_at = models.DateTimeField(auto_now = True)
-
-	objects = ComplimentManager()
-
-	def __repr__(self):
-		return "<Compliment: {} {}>".format(self.id, self.author, self.faved_by)
-
-
-
-
-
-##################OTHER MODELS####################
-
-# class Donator(models.Model):
-# 	amount = models.IntegerField(default = 1)
-# 	donator = models.ForeignKey(User, related_name = "jugs", default = 1)
+# class Compliment(models.Model):
+# 	content = models.CharField(max_length=255)
+# 	author = models.ForeignKey(User, related_name = 'compliments')
+# 	faved_by = models.ManyToManyField(User, related_name= 'favorited')
 # 	created_at = models.DateTimeField(auto_now_add = True)
 # 	updated_at = models.DateTimeField(auto_now = True)
+
+# 	objects = ComplimentManager()
+
+# 	def __repr__(self):
+# 		return "<Compliment: {} {}>".format(self.id, self.author, self.faved_by)
+
+# class ComplimentManager(models.Manager):
+# 	def validate(self, data):
+# 		pass
+# 		# errors = []
+# 		# # check length of name comment field
+# 		# if len(post_data['content']) < 2:
+# 		# 	errors.append("Come on bruh, put some effort into it!")
+# 		# if not errors:
+# 	def create_compliment(self, post_data, user):
+# 			return self.create(
+# 					content=post_data['content'],
+# 					author = user,
+# 					faved_by = ""
+# 				)

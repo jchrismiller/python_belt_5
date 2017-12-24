@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Current Compliments</title>
+		<meta charset="utf-8">
+		{% load staticfiles %}
+		<link href="{% static 'style.css' %}" rel="stylesheet">
+	</head>
+	<body>
+		<div class = "friend_list">
+		<p id = "welcome">Welcome Back, {{ current_user.first_name }} </p>
+		<p id = "links"><a href="/logout">Logout</a>
+
+			<table id = "friends">
+				<thead>
+					<tr>
+						<th>Alias</th>
+						<th>Action</th>
+					</tr>
+				</thead>
+				<tbody>
+						{% for friend in friends %}
+					<tr>
+						<td>
+							{{ friend.alias }}
+						</td>
+						<td>
+							<form action="/profile/{{friend.id}}">
+								{% csrf_token %}
+								<a href="/profile/{{friend.id}}">View Profile</a>
+							</form>
+							<form action="/remove/{{friend.id}}">
+								{% csrf_token %}
+								<a href="/remove/{{friend.id}}">Remove as Friend</a>
+							</form>
+						</td>
+					</tr>
+						{% endfor %}
+				</tbody>
+			</table>
+		</div> <!-- end friend_list -->
+
+		<div class = "other_users">
+
+			<table id="others">
+				<thead>
+					<tr>
+						<th>Alias</th>
+						<th>Action</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for friend in other_users %}
+					<tr>
+						<td>
+						<form action = "/profile/{{ friend.id }}" method = "GET">
+								{% csrf_token %}
+								<a href="/profile/{{friend.id}}">{{ friend.alias }}</a>
+							</form>
+						</td>
+						<td>
+						<form action = "/add/{{ friend.id }}" method="POST">
+								{% csrf_token %}
+							<input type="submit" value="Add Friend">
+						</form>
+						</td>
+					</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+		</div> <!-- end other_users -->
+	</body>
+</html>

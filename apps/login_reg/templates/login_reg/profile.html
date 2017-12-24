@@ -1,0 +1,16 @@
+<html>
+	<head>
+		<title>What's Up</title>
+		<meta charset="utf-8">
+		{% load staticfiles %}
+		<link href="{% static 'style.css' %}" rel="stylesheet">
+	</head>
+	<body>
+		<p id = "links"><a href="/friends">Dashboard</a>|<a href="/logout">Logout</a></p>
+
+		<h4>{{ user_profile.alias }}'s Profile</h4>
+		<p>Name: {{ user_profile.first_name }}</p>
+		<p>Email: {{ user_profile.email }}</p>
+
+	</body>
+</html>

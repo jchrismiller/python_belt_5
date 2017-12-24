@@ -1,9 +1,6 @@
 body{
 	font-family: "Arial";
 }
-.compliment{
-	margin: 10px 10px 10px 0px;
-}
 .main_left{
 	display: inline-block;
 	width: 700px;
@@ -28,9 +25,6 @@ body{
 	margin-left: 10px;
 	margin-right: 10px;
 }
-#author{
-	font-size: 10px;
-}
 
 #welcome{
 	font-weight: strong;
@@ -39,6 +33,8 @@ body{
 #register_pane{
 	display: inline-block;
 	width: 400px;
+	vertical-align: top;
+	margin-right: 0px;
 }
 #register_pane p{
 	vertical-align: top;
@@ -49,21 +45,29 @@ body{
 	vertical-align: top;
 }
 .login_pane{
-	width: 700px;
-
+	width: 400px;
+	display: inline-block;
 	margin-left: 0px;
+	text-align: right;
 }
 .login_pane form{
 	margin-left: 20px;
-	width: 250px;
-	text-align: right;
+	width: 350px;
 }
 #register_pane form{
 	vertical-align: top;
 	text-align: right;
-	width: 270px;
+	width: 400px;
+	display: inline-block;
 }
-
+#friends{
+	border-style: solid;
+	border-width: 1px;
+}
+#others{
+	border-style: solid;
+	border-width: 1px;
+}
 th{
 	text-align: left;
 	padding-right: 30px;
@@ -71,5 +75,15 @@ th{
 td{
 	text-align: left;
 	padding-right: 30px;
+
+}
+legend{
+	text-align: left;
+}
+.friend_list{
+	margin-bottom: 50px;
+}
+.friend_list form{
+	display: inline-block;
 }
 

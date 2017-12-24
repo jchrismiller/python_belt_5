@@ -6,11 +6,8 @@ urlpatterns = [
 	url(r'^login$', views.login),
 	url(r'^logout$', views.index),
 	url(r'^registration$', views.registration),
-	url(r'^success$', views.success),
-	url(r'^listofcomps$', views.listofcomps),
-	url(r'^compliment$', views.compliment),
-	url(r'^favorite$', views.favorite),
-	url(r'^favorite/(P?\d+)$', views.favorite),	
-	url(r'^compliment/(P?\d+)$', views.compliment)
-	# url(r'^user/(?P<user_id>\d+)$', views.show)
+	url(r'^friends$', views.friends),
+	url(r'^add/(P?\d+)$', views.add),
+	url(r'^profile/(P?\d+)$', views.profile),
+	url(r'^remove/(P?\d+)$', views.remove)
 ]
