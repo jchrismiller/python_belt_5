@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Current Compliments</title>
+		<meta charset="utf-8">
+		{% load staticfiles %}
+		<link href="{% static 'style.css' %}" rel="stylesheet">
+	</head>
+	<body>
+		<div class = "main_left">
+		<p id = "welcome">Welcome Back, {{ current_user.first_name }} </p>
+			<a href="/logout">Log Out</a> <a href="/listofcomps">Your Compliments</a>
+
+			<div class = "compliment">
+				<form action = '/compliment' method="POST">
+					{% csrf_token %}
+				<input type="textarea" name="content" style="height:48px" >
+				<p><input type="submit" value='"Contribute"'></p>
+				</form>
+			</div>
+
+			<div class = "favorites">
+			</div> <!-- end main_left -->
+			<h1>FAVS</h1>
+			<div class = faves>
+				TEST TEST TEST 
+
+				{% for fav in fav_comps %}
+				<p id = "paragraph">{{ fav.content }}<br>
+					{{ fav.author.first_name }} {{ fav.author.last_name }}
+
+				</p>
+				{% endfor %}
+			</div>
+
+
+
+		</div> <!-- end main_left -->
+		<div class = "main_right">
+
+			
+			
+					{% for compliment in compliments %}
+						
+						<p id = 'paragraph'>{{ compliment.content }} <br>
+							<span id = "author">{{ compliment.author.first_name }} {{ compliment.author.last_name }}</span>
+						
+							<form action = "/favorite/{{ compliment.id }}" method = "POST">
+								{% csrf_token %}
+								<input type="submit" name="favorite" value = "Favorite">
+							</form>
+							
+						</p>
+
+						</li>
+			
+					{% endfor %}
+
+		</div>
+	</body>
+</html>
